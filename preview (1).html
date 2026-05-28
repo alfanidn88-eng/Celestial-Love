@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For My Queen Jesslyn 💖</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    html,body{
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      background:#020208;
+      font-family:'Outfit',sans-serif;
+      color:#fff;
+    }
+
+    canvas{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      mix-blend-mode:screen;
+    }
+
+    .container{
+      position:relative;
+      z-index:10;
+      width:100%;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:24px;
+      overflow-y:auto;
+      background:radial-gradient(circle at 50% 50%, rgba(255,123,213,0.03) 0%, transparent 70%);
+    }
+
+    .card{
+      position:relative;
+      width:100%;
+      max-width:760px;
+      padding:65px 45px;
+      border-radius:40px;
+      background:linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      box-shadow:
+        0 30px 70px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.2),
+        0 0 50px rgba(184,182,255,0.08),
+        0 0 100px rgba(255,123,213,0.04);
+      text-align:center;
+      overflow:hidden;
+      animation:cosmicEntrance 2.2s cubic-bezier(0.15,0.85,0.31,1) forwards;
+    }
+
+    .card::before{
+      content:'';
+      position:absolute;
+      top:-50%;
+      left:-50%;
+      width:200%;
+      height:200%;
+      background:radial-gradient(circle, rgba(255,255,255,0.015) 0%, transparent 60%);
+      pointer-events:none;
+      animation:nebulaFloat 20s linear infinite;
+    }
+
+    @keyframes cosmicEntrance{
+      from{
+        opacity:0;
+        transform:translateY(60px) scale(0.94) rotateX(4deg);
+        filter:blur(10px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1) rotateX(0deg);
+        filter:blur(0);
+      }
+    }
+
+    @keyframes nebulaFloat{
+      0%{transform:rotate(0deg);}
+      100%{transform:rotate(360deg);}
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 22px;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(255,181,223,0.1), rgba(184,182,255,0.1));
+      color:#ffc2e4;
+      font-size:12px;
+      font-weight:600;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      margin-bottom:28px;
+      box-shadow:0 0 15px rgba(255,181,223,0.1);
+    }
+
+    h1{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(40px,8vw,72px);
+      line-height:1.05;
+      font-weight:700;
+      margin-bottom:22px;
+    }
+
+    h1 span{
+      background:linear-gradient(90deg,#ff9ebb,#e2b6ff,#9bb2ff,#ff9ebb);
+      background-size:300% auto;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      animation:liquidFlow 6s linear infinite;
+    }
+
+    @keyframes liquidFlow{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+
+    .text-glow{
+      font-size:clamp(16px,3.5vw,19px);
+      line-height:1.8;
+      color:#dcdff0;
+      max-width:580px;
+      margin:0 auto 40px auto;
+      font-weight:300;
+      letter-spacing:0.3px;
+      text-shadow:0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    #text{
+      font-size:14px;
+      color:#ffb5df;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-top:25px;
+      margin-bottom:20px;
+      min-height:20px;
+      font-weight:400;
+      opacity:0.8;
+      text-shadow:0 0 10px rgba(255,181,223,0.4);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:18px 46px;
+      border-radius:999px;
+      background:linear-gradient(135deg, rgba(255,158,187,0.15) 0%, rgba(184,182,255,0.08) 100%);
+      border:none;
+      color:#fff;
+      font-weight:600;
+      font-size:16px;
+      letter-spacing:1px;
+      transition:all 0.5s cubic-bezier(0.15,0.85,0.31,1);
+      box-shadow:0 12px 30px rgba(0,0,0,0.3);
+      cursor:pointer;
+      backdrop-filter:blur(5px);
+    }
+
+    .btn:hover{
+      transform:translateY(-6px) scale(1.02);
+      box-shadow:
+        0 20px 40px rgba(0,0,0,0.4),
+        0 0 30px rgba(255,158,187,0.3),
+        0 0 60px rgba(184,182,255,0.2);
+    }
+
+    .music-info{
+      margin-top:20px;
+      font-size:12px;
+      color:#9297b5;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      opacity:0.6;
+    }
+
+    .stats{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:45px;
+    }
+
+    .box{
+      flex:1;
+      min-width:160px;
+      padding:28px 20px;
+      border-radius:28px;
+      background:rgba(255,255,255,0.01);
+      transition:all 0.5s cubic-bezier(0.15,0.85,0.31,1);
+    }
+
+    .box:hover{
+      transform:translateY(-8px);
+      box-shadow:0 15px 30px rgba(0,0,0,0.2);
+    }
+
+    .icon{
+      font-size:34px;
+      margin-bottom:14px;
+      display:block;
+    }
+
+    .box h3{
+      font-size:15px;
+      margin-bottom:8px;
+    }
+
+    .box p{
+      font-size:13px;
+      color:#a4a8c2;
+      line-height:1.6;
+    }
+
+    .popup{
+      position:fixed;
+      inset:0;
+      background:rgba(2,2,8,0.9);
+      backdrop-filter:blur(15px);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      opacity:0;
+      visibility:hidden;
+      transition:0.6s;
+      z-index:999;
+    }
+
+    .popup.show{
+      opacity:1;
+      visibility:visible;
+    }
+
+    .popup-card{
+      width:90%;
+      max-width:440px;
+      padding:55px 35px;
+      border-radius:36px;
+      background:linear-gradient(135deg,#110524 0%,#04010a 100%);
+      border:1px solid rgba(255,181,223,0.2);
+      text-align:center;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,0.6),
+        0 0 60px rgba(255,181,223,0.15);
+      transform:scale(0.88) translateY(20px);
+      transition:0.6s;
+    }
+
+    .popup.show .popup-card{
+      transform:scale(1) translateY(0);
+    }
+
+    .popup-card h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:40px;
+      color:#ffb5df;
+      margin-bottom:18px;
+    }
+
+    .popup-card p{
+      font-size:16px;
+      color:#cbd0eb;
+      line-height:1.8;
+      margin-bottom:35px;
+    }
+
+    .close{
+      padding:14px 36px;
+      border-radius:999px;
+      background:#fff;
+      border:none;
+      color:#04010a;
+      font-size:14px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    @media(max-width:640px){
+      .card{
+        padding:45px 24px;
+        border-radius:32px;
+      }
+
+      .box{
+        min-width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="bg"></canvas>
+
+  <audio id="romanticMusic" loop>
+    <source src="https://assets.mixkit.co/music/preview/2965/2965.wav" type="audio/wav">
+  </audio>
+
+  <div class="container">
+    <div class="card">
+
+      <div class="badge">✨ For Someone Special</div>
+
+      <h1>
+        For My, <span>Queen Jesslyn</span>
+      </h1>
+
+      <div class="text-glow">
+        Di antara seluruh galaksi yang ada,<br>
+        aku tetap memilih kamu sebagai tempat paling indah untuk pulang 💖
+      </div>
+
+      <button class="btn" id="touchHeartBtn">
+        💌 Touch My Heart 😋
+      </button>
+
+      <div class="music-info">
+        ♪ Risk It All - Bruno Mars
+      </div>
+
+      <div id="text">
+        Menanti interaksimu...
+      </div>
+
+      <div class="stats">
+
+        <div class="box">
+          <div class="icon">🌸</div>
+          <h3>Beautiful Soul</h3>
+          <p>Kamu bukan sekadar indah, kamu menenangkan.</p>
+        </div>
+
+        <div class="box">
+          <div class="icon">✨</div>
+          <h3>My Universe</h3>
+          <p>Dunia terasa lebih hidup sejak kamu hadir.</p>
+        </div>
+
+        <div class="box">
+          <div class="icon">💖</div>
+          <h3>Eternal Light</h3>
+          <p>Kamu selalu berhasil jadi cahaya saat semuanya gelap.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="popup-card">
+      <h2>I Love You ✨</h2>
+
+      <p>
+        Kalau suatu hari kamu merasa sendirian,<br>
+        ingat ya...<br>
+        aku selalu ada buat kamu 💖
+      </p>
+
+      <button class="close" onclick="closePopup()">
+        Tutup Cinta
+      </button>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function () {
+
+      const touchHeartBtn = document.getElementById("touchHeartBtn");
+      const audio = document.getElementById("romanticMusic");
+      const popup = document.getElementById("popup");
+
+      if (touchHeartBtn) {
+        touchHeartBtn.addEventListener("click", startRomanticMode);
+        touchHeartBtn.addEventListener("touchend", startRomanticMode);
+      }
+
+      function startRomanticMode(e) {
+        if (e) e.preventDefault();
+
+        if (audio) {
+          audio.play().catch((err) => {
+            console.log("Autoplay diblokir:", err);
+          });
+        }
+
+        if (popup) {
+          popup.classList.add("show");
+        }
+      }
+
+      window.closePopup = function () {
+        popup.classList.remove("show");
+      };
+
+      // THREE JS
+      const canvas = document.getElementById("bg");
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true
+      });
+
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x05060f, 0.002);
+
+      const camera = new THREE.PerspectiveCamera(
+        70,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        2000
+      );
+
+      camera.position.z = 140;
+
+      // STARS
+      function stars(n) {
+        const geometry = new THREE.BufferGeometry();
+        const positions = [];
+
+        for (let i = 0; i < n; i++) {
+          positions.push(
+            (Math.random() - 0.5) * 800,
+            (Math.random() - 0.5) * 800,
+            (Math.random() - 0.5) * 800
+          );
+        }
+
+        geometry.setAttribute(
+          "position",
+          new THREE.Float32BufferAttribute(positions, 3)
+        );
+
+        return new THREE.Points(
+          geometry,
+          new THREE.PointsMaterial({
+            size: 1,
+            color: 0x88aaff,
+            transparent: true,
+            opacity: 0.8
+          })
+        );
+      }
+
+      scene.add(stars(6000));
+
+      // PATH
+      const path = [
+        new THREE.Vector3(-20,20,0),
+        new THREE.Vector3(-10,10,2),
+        new THREE.Vector3(-5,0,0),
+        new THREE.Vector3(0,5,0),
+        new THREE.Vector3(10,20,0),
+        new THREE.Vector3(20,10,-2),
+        new THREE.Vector3(25,0,0)
+      ];
+
+      scene.add(
+        new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints(path),
+          new THREE.LineBasicMaterial({
+            color:0xff77cc
+          })
+        )
+      );
+
+      const soul = new THREE.Mesh(
+        new THREE.SphereGeometry(2,16,16),
+        new THREE.MeshBasicMaterial({
+          color:0xffffff
+        })
+      );
+
+      scene.add(soul);
+
+      // TOUCH PARTICLES
+      const touchParticles = [];
+
+      function createTouchStar(x, y) {
+        const star = new THREE.Mesh(
+          new THREE.SphereGeometry(0.9, 10, 10),
+          new THREE.MeshBasicMaterial({
+            color:0xffffff,
+            transparent:true,
+            opacity:1,
+            blending:THREE.AdditiveBlending
+          })
+        );
+
+        star.position.set(
+          x * 0.6,
+          y * 0.6,
+          (Math.random() - 0.5) * 120
+        );
+
+        star.velocity = new THREE.Vector3(
+          (Math.random() - 0.5) * 0.3,
+          (Math.random() - 0.5) * 0.3,
+          (Math.random() - 0.5) * 0.3
+        );
+
+        star.life = 1;
+
+        scene.add(star);
+        touchParticles.push(star);
+      }
+
+      let mouse = { x:0, y:0 };
+
+      window.addEventListener("mousemove", (e) => {
+        mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouse.y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+        createTouchStar(mouse.x * 80, -mouse.y * 60);
+      });
+
+      window.addEventListener("touchmove", (e) => {
+        const t = e.touches[0];
+
+        mouse.x = (t.clientX / window.innerWidth - 0.5) * 2;
+        mouse.y = (t.clientY / window.innerHeight - 0.5) * 2;
+
+        createTouchStar(mouse.x * 80, -mouse.y * 60);
+      });
+
+      // TEXT ANIMATION
+      const text = document.getElementById("text");
+
+      setTimeout(() => {
+        text.innerHTML = "Memories forming...";
+      }, 2000);
+
+      setTimeout(() => {
+        text.innerHTML = "Universe responding...";
+      }, 4000);
+
+      setTimeout(() => {
+        text.innerHTML = "You are not inside it...";
+      }, 6000);
+
+      setTimeout(() => {
+        text.innerHTML = "You ARE the universe 💖";
+      }, 8000);
+
+      // ANIMATE
+      let t = 0;
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        t += 0.01;
+
+        camera.position.x += (mouse.x * 30 - camera.position.x) * 0.03;
+        camera.position.y += (-mouse.y * 20 - camera.position.y) * 0.03;
+
+        camera.lookAt(0,0,0);
+
+        let i = (t * 2) % path.length;
+        let a = Math.floor(i);
+        let b = (a + 1) % path.length;
+        let f = i - a;
+
+        soul.position.lerpVectors(path[a], path[b], f);
+
+        for (let i = touchParticles.length - 1; i >= 0; i--) {
+          const p = touchParticles[i];
+
+          p.position.add(p.velocity);
+          p.life -= 0.01;
+
+          p.material.opacity = p.life;
+          p.scale.setScalar(p.life * 1.8);
+
+          if (p.life <= 0) {
+            scene.remove(p);
+            touchParticles.splice(i, 1);
+          }
+        }
+
+        scene.rotation.y += 0.0002;
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // RESIZE
+      window.addEventListener("resize", () => {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      });
+    };
+  </script>
+
+</body>
+</html>
